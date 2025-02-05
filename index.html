@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Morse Trainer</title>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <header class="container">
+        <h1>Morse Trainer</h1>
+    </header>
+    <main class="container">
+        <div class="light-bulb"></div>
+
+        <div>
+            <input type="text" name="" id="">
+            <button>switch</button>
+        </div>
+
+        <div class="config">
+            <h3>Configuraçao</h3>
+            <div>
+                <div>
+                    <label for="tilda-timer">Entre Sinais</label>
+                    <span id="display-," class="display">10</span>
+                </div>
+                <input type="range" name="tilda-timer" data-type="," min="0.25" step="0.25" max="5" value="0.25">
+            </div>
+            <div>
+                <div>
+                    <label for="space-timer">Entre Letras</label>
+                    <span id="display- " class="display">10</span>
+                </div>
+                <input type="range" name="space-timer" data-type=" " min="0.25" step="0.25" max="5" value="1.5">
+            </div>
+            <div>
+                <div>
+                    <label for="dot-timer">Ponto .</label>
+                    <span id="display-." class="display">10</span>
+                </div>
+                <input type="range" name="dot-timer" data-type="." min="0.25" step="0.25" max="5" value="0.5">
+            </div>
+            <div>
+                <div>
+                    <label for="dash-timer">Traco _</label>
+                    <span id="display-_" class="display">10</span>
+                </div>
+                <input type="range" name="dash-timer" data-type="_" min="0.25" step="0.25" max="5" value="1">
+            </div>
+            <div>
+                <div>
+                    <label for="repeat-timer">Entre Palavras</label>
+                    <span id="display-*" class="display">10</span>
+                </div>
+                <input type="range" name="repeat-timer" data-type="*" min="0.25" step="0.25" max="5" value="3">
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>
