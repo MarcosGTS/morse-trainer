@@ -18,6 +18,20 @@ const MORSE_TABLE =  {
     '5': ".....", '6': "_....", '7': "__...", '8': "___..", '9': "____."
 };
 
+const WORD_LIST = [ 
+   "amor", "amizade", "carro", "casa", "tempo", "dia", "noite", "trabalho", "família", "vida",
+  "homem", "mulher", "cidade", "país", "mundo", "pai", "mãe", "filho", "filha", "escola",
+  "professor", "aluno", "dinheiro", "saúde", "felicidade", "viagem", "história", "livro", "coração", "cabeça",
+  "mão", "olho", "pé", "corpo", "comida", "água", "bebida", "roupa", "sapato", "telefone",
+  "computador", "internet", "trânsito", "ônibus", "carreira", "futuro", "presente", "passado", "esperança", "medo",
+  "alegria", "tristeza", "força", "fraqueza", "tempo", "relógio", "porta", "janela", "quarto", "sala",
+  "cozinha", "banheiro", "mesa", "cadeira", "sofá", "televisão", "filme", "música", "canto", "dança",
+  "arte", "pintura", "esporte", "futebol", "basquete", "praia", "montanha", "rio", "mar", "sol",
+  "lua", "estrela", "vento", "chuva", "nuvem", "neve", "terra", "fogo", "ar", "luz",
+  "sombra", "estrada", "ponte", "igreja", "hospital", "farmácia", "loja", "mercado", "parque", "jardim"
+];
+
+
 const lightBulb = document.querySelector(".light-bulb");
 const button = document.querySelector("button");
 const timeoutList = document.querySelectorAll("input[type=range]");
@@ -58,7 +72,7 @@ function renderMorse(morse) {
     async function loop() {
         const sinal = morse[index];
         const timeout = TIMEOUT_TABLE[sinal];
-        console.log(sinal, timeout);
+        //console.log(sinal, timeout);
 
         if (!controller.run) return;
 
@@ -79,14 +93,13 @@ function renderMorse(morse) {
 
 let controller = {}; 
 
-button.addEventListener("click", () => {
-    const input = document.querySelector("input");
-    const morse = getMorseTranslation(input.value.toUpperCase());
+// button.addEventListener("click", () => {
+//     const input = document.querySelector("input");
+//     const morse = getMorseTranslation(input.value.toUpperCase());
 
-    controller.run = false
-    controller = renderMorse(morse);
-});
-
+//     controller.run = false
+//     controller = renderMorse(morse);
+// });
 
 function getMorseTranslation(text) {
     let morse = text.split("").map((char) => {
@@ -106,3 +119,64 @@ function getMorseTranslation(text) {
 
     return morse; 
 }
+
+function game() {
+    const status = {points: 0, lives: 3};
+    let word = null;
+    let controller = {};
+
+    // START
+    next();
+
+    function next() {
+        word = pickRandom(WORD_LIST).toUpperCase() ;
+        console.log(word);
+        playMorse(word);
+    }
+
+    // check if correct or wrong
+
+    function checkAnswer(value) {
+        if (status.lives <= 0) return;
+
+        if (value.toUpperCase() == word) {
+            console.log("YOUR ANSWER IS CORRECT!!");
+            status.points += 1; 
+            next();
+        } else {
+            status.lives -= 1;
+
+            if (status.lives > 0) {
+                console.log("WRONG, TRY AGAIN!");
+            } else {
+                console.log("YOU LOSE", status);
+                controller.run = false;
+            }
+        }
+        
+    }
+
+    // if correct pick another word
+
+    function pickRandom(list) {
+        const random_index = Math.floor(Math.random() * list.length);
+        return list[random_index];
+    }
+
+    function playMorse(word) {
+        const morse = getMorseTranslation(word);
+
+        controller.run = false
+        controller = renderMorse(morse);       
+    }
+
+    return {checkAnswer};
+}
+
+const {checkAnswer} = game();
+
+button.addEventListener("click", () => {
+    const input = document.querySelector("input");
+    checkAnswer(input.value.toUpperCase());
+});
+
